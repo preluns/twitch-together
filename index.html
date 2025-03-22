@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Twitch Together</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        #twitch-embed {
+            margin: 20px auto;
+            width: 800px;
+            height: 450px;
+        }
+        input {
+            padding: 10px;
+            width: 300px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #6441A5; /* Цвет Twitch */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #7a5bbf;
+        }
+    </style>
+</head>
+<body>
+    <h1>Twitch Together</h1>
+    <p>Вставьте ссылку на стрим или запись Twitch:</p>
+    <input type="text" id="stream-url" placeholder="https://www.twitch.tv/имя_стримера или ссылка на VOD">
+    <button onclick="loadStream()">Загрузить</button>
+    <div id="twitch-embed"></div>
+
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+    <script>
+        function loadStream() {
+            const url = document.getElementById("stream-url").value;
+            const embedDiv = document.getElementById("twitch-embed");
+            embedDiv.innerHTML = ""; // Очистка старого плеера
+
+            let channel = "";
+            let video = "";
+
+            // Проверяем, что это: стрим или запись
+            if (url.includes("videos/")) {
+                video = url.split("videos/")[1].split("?")[0];
+            } else {
+                channel = url.split("twitch.tv/")[1]?.split("/")[0] || url.split("twitch.tv/")[1];
+            }
+
+            // Создаем плеер Twitch
+            new Twitch.Embed("twitch-embed", {
+                width: 800,
+                height: 450,
+                channel: channel || null,
+                video: video || null,
+                parent: ["preluns.github.io"] // Замените на ваш домен GitHub Pages
+            });
+        }
+    </script>
+</body>
+</html>
