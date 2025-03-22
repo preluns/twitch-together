@@ -5,37 +5,83 @@
     <title>Twitch Together</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); /* Градиентный фон */
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        #twitch-embed {
-            margin: 20px auto;
-            width: 800px;
-            height: 450px;
+        h1 {
+            font-size: 2.5em;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         input {
-            padding: 10px;
-            width: 300px;
+            padding: 12px;
+            width: 350px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            background-color: #ffffff;
+            color: #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+        input::placeholder {
+            color: #888;
         }
         button {
-            padding: 10px 20px;
+            padding: 12px 25px;
             background-color: #6441A5; /* Цвет Twitch */
-            color: white;
             border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 1em;
             cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.2s;
         }
         button:hover {
             background-color: #7a5bbf;
+            transform: translateY(-2px);
+        }
+        #twitch-embed {
+            width: 900px;
+            height: 506px; /* 16:9 пропорции */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #b0b0b0;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>Twitch Together</h1>
     <p>Вставьте ссылку на стрим или запись Twitch:</p>
-    <input type="text" id="stream-url" placeholder="https://www.twitch.tv/имя_стримера или ссылка на VOD">
-    <button onclick="loadStream()">Загрузить</button>
+    <div class="input-container">
+        <input type="text" id="stream-url" placeholder="https://www.twitch.tv/имя_стримера или ссылка на VOD">
+        <button onclick="loadStream()">Загрузить</button>
+    </div>
     <div id="twitch-embed"></div>
+    <div class="footer">Создано для совместного просмотра с друзьями</div>
 
     <script src="https://embed.twitch.tv/embed/v1.js"></script>
     <script>
@@ -56,8 +102,8 @@
 
             // Создаем плеер Twitch
             new Twitch.Embed("twitch-embed", {
-                width: 800,
-                height: 450,
+                width: 900,
+                height: 506,
                 channel: channel || null,
                 video: video || null,
                 parent: ["preluns.github.io"] // Замените на ваш домен GitHub Pages
